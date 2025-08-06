@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Trae Usage Token Extractor",
+  "version": "1.0",
+  "description": "Extract JWT token from Trae API requests",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://api-sg-central.trae.ai/*",
+    "*://*.trae.ai/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Trae Usage Extractor",
+    "default_icon": {
+      "16": "icon16.svg",
+      "48": "icon48.svg",
+      "128": "icon128.svg"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.trae.ai/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "16": "icon16.svg",
+    "48": "icon48.svg",
+    "128": "icon128.svg"
+  }
+}

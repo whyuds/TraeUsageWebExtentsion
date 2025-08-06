@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 300px;
+      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    .status {
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .status.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .status.waiting {
+      background-color: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeaa7;
+    }
+    .token-section {
+      margin-bottom: 15px;
+    }
+    .token-display {
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 12px;
+      word-break: break-all;
+      max-height: 100px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+    .copy-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 14px;
+    }
+    .copy-btn:hover {
+      background-color: #0056b3;
+    }
+    .copy-btn:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+    }
+    .instructions {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.4;
+    }
+    .success-message {
+      color: #28a745;
+      font-size: 12px;
+      text-align: center;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="title">Trae Token Extractor</div>
+  </div>
+  
+  <div id="status" class="status waiting">
+    等待检测API请求...
+  </div>
+  
+  <div id="tokenSection" class="token-section" style="display: none;">
+    <div id="tokenDisplay" class="token-display"></div>
+    <button id="copyBtn" class="copy-btn">复制Token到剪贴板</button>
+    <div id="successMessage" class="success-message" style="display: none;">已复制到剪贴板!</div>
+  </div>
+  
+  <div class="instructions">
+    <strong>使用说明:</strong><br>
+    1. 访问trae.ai，并查看一次Usage<br>
+    2. 执行会调用支付状态API的操作<br>
+    3. 扩展会自动检测并提取token<br>
+    4. 点击复制按钮将token复制到剪贴板
+    5. 到粘贴到VSCode扩展中
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
