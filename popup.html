@@ -60,6 +60,7 @@
       cursor: pointer;
       width: 100%;
       font-size: 14px;
+      margin-bottom: 10px;
     }
     .copy-btn:hover {
       background-color: #0056b3;
@@ -67,6 +68,19 @@
     .copy-btn:disabled {
       background-color: #6c757d;
       cursor: not-allowed;
+    }
+    .goto-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 14px;
+    }
+    .goto-btn:hover {
+      background-color: #218838;
     }
     .instructions {
       font-size: 12px;
@@ -87,22 +101,24 @@
   </div>
   
   <div id="status" class="status waiting">
-    等待检测API请求...
+    Waiting for API requests...
   </div>
   
   <div id="tokenSection" class="token-section" style="display: none;">
     <div id="tokenDisplay" class="token-display"></div>
-    <button id="copyBtn" class="copy-btn">复制Token到剪贴板</button>
-    <div id="successMessage" class="success-message" style="display: none;">已复制到剪贴板!</div>
+    <button id="copyBtn" class="copy-btn">Copy Token to Clipboard</button>
+    <div id="successMessage" class="success-message" style="display: none;">Copied to clipboard!</div>
   </div>
   
+  <button id="gotoBtn" class="goto-btn">Go to Trae Usage Page</button>
+  
   <div class="instructions">
-    <strong>使用说明:</strong><br>
-    1. 访问trae.ai，并查看一次Usage<br>
-    2. 执行会调用支付状态API的操作<br>
-    3. 扩展会自动检测并提取token<br>
-    4. 点击复制按钮将token复制到剪贴板
-    5. 到粘贴到VSCode扩展中
+    <strong>Instructions:</strong><br>
+    1. Visit trae.ai and check Usage page<br>
+    2. Perform actions that call payment status API<br>
+    3. Extension will automatically detect and extract token<br>
+    4. Click copy button to copy token to clipboard<br>
+    5. Paste into VSCode extension
   </div>
   
   <script src="popup.js"></script>

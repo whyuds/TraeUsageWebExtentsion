@@ -1,6 +1,0 @@
-<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-  <rect width="48" height="48" rx="6" fill="#2196F3"/>
-  <circle cx="24" cy="20" r="8" fill="white"/>
-  <rect x="16" y="30" width="16" height="4" rx="2" fill="white"/>
-  <text x="24" y="25" text-anchor="middle" fill="#2196F3" font-family="Arial, sans-serif" font-size="8" font-weight="bold">JWT</text>
-</svg>

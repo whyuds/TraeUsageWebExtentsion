@@ -39,8 +39,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 
 // Handle extension installation
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.action.setBadgeText({ text: '?' });
-  chrome.action.setBadgeBackgroundColor({ color: '#FF9800' });
+  // No default badge - only show when token is found
 });
 
 // Reset token status when navigating away from trae.ai
@@ -49,7 +48,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     chrome.storage.local.set({ 
       'tokenFound': false 
     });
-    chrome.action.setBadgeText({ text: '?' });
-    chrome.action.setBadgeBackgroundColor({ color: '#FF9800' });
+    chrome.action.setBadgeText({ text: '' });
   }
 });

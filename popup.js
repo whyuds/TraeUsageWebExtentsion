@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const tokenDisplay = document.getElementById('tokenDisplay');
   const copyBtn = document.getElementById('copyBtn');
   const successMessage = document.getElementById('successMessage');
+  const gotoBtn = document.getElementById('gotoBtn');
   
   // Load stored token data
   chrome.storage.local.get(['traeToken', 'tokenFound'], function(result) {
@@ -30,6 +31,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
+  // Go to Trae usage page button click handler
+  gotoBtn.addEventListener('click', function() {
+    chrome.tabs.create({ url: 'https://www.trae.ai/account-setting#usage' });
+  });
+  
   // Copy button click handler
   copyBtn.addEventListener('click', function() {
     chrome.storage.local.get(['traeToken'], function(result) {
@@ -53,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function showTokenFound(token) {
     statusDiv.className = 'status success';
-    statusDiv.textContent = 'JWT Token 已找到!';
+    statusDiv.textContent = 'JWT Token Found!';
     
     tokenDisplay.textContent = token;
     tokenSection.style.display = 'block';
@@ -61,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function showWaitingStatus() {
     statusDiv.className = 'status waiting';
-    statusDiv.textContent = '等待检测API请求...';
+    statusDiv.textContent = 'Waiting for API requests...';
     
     tokenSection.style.display = 'none';
     successMessage.style.display = 'none';
