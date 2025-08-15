@@ -97,28 +97,24 @@
 </head>
 <body>
   <div class="header">
-    <div class="title">Trae Token Extractor</div>
-  </div>
-  
-  <div id="status" class="status waiting">
-    Waiting for API requests...
+    <div class="title">Trae Session Extractor</div>
   </div>
   
   <div id="tokenSection" class="token-section" style="display: none;">
-    <div id="tokenDisplay" class="token-display"></div>
-    <button id="copyBtn" class="copy-btn">Copy Token to Clipboard</button>
-    <div id="successMessage" class="success-message" style="display: none;">Copied to clipboard!</div>
+    <div id="successMessage" class="success-message">✓ Session auto-copied to clipboard!</div>
   </div>
+  
+  <button id="backToTraeBtn" class="goto-btn" style="background-color: #6f42c1; margin-bottom: 15px;">Back to Trae</button>
   
   <button id="gotoBtn" class="goto-btn">Go to Trae Usage Page</button>
   
   <div class="instructions">
     <strong>Instructions:</strong><br>
-    1. Visit trae.ai and check Usage page<br>
-    2. Perform actions that call payment status API<br>
-    3. Extension will automatically detect and extract token<br>
-    4. Click copy button to copy token to clipboard<br>
-    5. Paste into VSCode extension
+    1. Visit trae.ai and browse any page<br>
+    2. Extension will automatically detect X-Cloudide-Session<br>
+    3. Session will be auto-copied when clicking extension icon<br>
+    4. Return to VSCode to auto-update SessionID<br>
+    5. Session stays valid longer than JWT tokens
   </div>
   
   <script src="popup.js"></script>
