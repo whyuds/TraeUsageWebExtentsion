@@ -93,6 +93,32 @@
       text-align: center;
       margin-top: 5px;
     }
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #28a745;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(10px);
+    }
+    .toast::before {
+      content: '✓';
+      margin-right: 6px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
@@ -100,13 +126,9 @@
     <div class="title">Trae Session Extractor</div>
   </div>
   
-  <div id="tokenSection" class="token-section" style="display: none;">
-    <div id="successMessage" class="success-message">✓ Session auto-copied to clipboard!</div>
-  </div>
+  <div id="toast" class="toast">Copied to clipboard!</div>
   
-  <button id="backToTraeBtn" class="goto-btn" style="background-color: #6f42c1; margin-bottom: 15px;">Back to Trae</button>
-  
-  <button id="gotoBtn" class="goto-btn">Go to Trae Usage Page</button>
+  <button id="actionBtn" class="goto-btn" style="background-color: #6c757d;">Go to Trae Usage Page</button>
   
   <div class="instructions">
     <strong>Instructions:</strong><br>
