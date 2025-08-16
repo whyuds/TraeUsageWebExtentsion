@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
       actionBtn.style.backgroundColor = '#28a745';
     } else {
       actionBtn.textContent = 'Go to Trae Usage Page';
-      actionBtn.style.backgroundColor = '#6c757d';
+      actionBtn.style.backgroundColor = '#007bff';
     }
   }
 
