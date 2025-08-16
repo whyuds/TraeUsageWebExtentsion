@@ -26,9 +26,16 @@ jobs:
       run: |
         openssl genrsa -out key.pem 2048
         
+    - name: Prepare extension files
+      run: |
+        # Create a temporary directory for extension files
+        mkdir -p extension
+        # Copy all extension files to the temp directory
+        cp manifest.json background.js content.js popup.html popup.js *.png extension/
+        
     - name: Build CRX file
       run: |
-        crx3 --keyPath=key.pem --crxPath=TraeUsageWebExtension.crx .
+        crx3 --keyPath=key.pem --crxPath=TraeUsageWebExtension.crx extension/
         
     - name: Create Release
       uses: softprops/action-gh-release@v1
