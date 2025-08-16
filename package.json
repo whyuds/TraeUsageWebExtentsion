@@ -1,6 +1,6 @@
 {
   "name": "trae-usage-web-extension",
-  "version": "1.0.0",
+  "version": "1.2",
   "description": "Chrome extension to extract X-Cloudide-Session from Trae.ai",
   "scripts": {
     "build": "echo 'Building extension...'",
