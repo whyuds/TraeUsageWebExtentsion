@@ -119,18 +119,51 @@
       margin-right: 6px;
       font-size: 14px;
     }
+    .help-icon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      background-color: #007bff;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 18px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .help-icon:hover {
+      background-color: #0056b3;
+    }
+    .help-content {
+      display: none;
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 15px;
+      font-size: 12px;
+      color: #666;
+      line-height: 1.4;
+    }
+    .help-content.show {
+      display: block;
+    }
   </style>
 </head>
 <body>
   <div class="header">
-    <div class="title">Trae Session Extractor</div>
+    <div class="title">
+      Trae Session Extractor
+      <span id="helpIcon" class="help-icon" title="Click for help">?</span>
+    </div>
   </div>
   
   <div id="toast" class="toast">Copied to clipboard!</div>
   
-  <button id="actionBtn" class="goto-btn" style="background-color: #6c757d;">Go to Trae Usage Page</button>
-  
-  <div class="instructions">
+  <div id="helpContent" class="help-content">
     <strong>Instructions:</strong><br>
     1. Visit trae.ai and browse any page<br>
     2. Extension will automatically detect X-Cloudide-Session<br>
@@ -138,6 +171,8 @@
     4. Return to VSCode to auto-update SessionID<br>
     5. Session stays valid longer than JWT tokens
   </div>
+  
+  <button id="actionBtn" class="goto-btn" style="background-color: #6c757d;">Go to Trae Usage Page</button>
   
   <script src="popup.js"></script>
 </body>

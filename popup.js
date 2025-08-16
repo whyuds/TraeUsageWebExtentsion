@@ -2,7 +2,21 @@
 document.addEventListener('DOMContentLoaded', function() {
   const toast = document.getElementById('toast');
   const actionBtn = document.getElementById('actionBtn');
+  const helpIcon = document.getElementById('helpIcon');
+  const helpContent = document.getElementById('helpContent');
   let sessionCopied = false;
+  
+  // Help icon click handler
+  helpIcon.addEventListener('click', function() {
+    helpContent.classList.toggle('show');
+  });
+  
+  // Hide help content when clicking outside
+  document.addEventListener('click', function(event) {
+    if (!helpIcon.contains(event.target) && !helpContent.contains(event.target)) {
+      helpContent.classList.remove('show');
+    }
+  });
   
   // Load stored session data
   chrome.storage.local.get(['traeSession', 'sessionFound'], function(result) {
