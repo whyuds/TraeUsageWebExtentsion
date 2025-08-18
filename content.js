@@ -27,8 +27,9 @@ function showSessionCopiedToast() {
   const toast = document.createElement('div');
   toast.style.cssText = `
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #007bff;
     color: white;
     padding: 15px 20px;
@@ -40,30 +41,30 @@ function showSessionCopiedToast() {
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     max-width: 350px;
     line-height: 1.4;
-    animation: slideIn 0.3s ease-out;
+    animation: fadeIn 0.3s ease-out;
   `;
   
   // Add CSS animation
   const style = document.createElement('style');
   style.textContent = `
-    @keyframes slideIn {
+    @keyframes fadeIn {
       from {
-        transform: translateX(100%);
         opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
       }
       to {
-        transform: translateX(0);
         opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
       }
     }
-    @keyframes slideOut {
+    @keyframes fadeOut {
       from {
-        transform: translateX(0);
         opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
       }
       to {
-        transform: translateX(100%);
         opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
       }
     }
   `;
@@ -73,17 +74,17 @@ function showSessionCopiedToast() {
     <div style="display: flex; align-items: center; gap: 10px;">
       <div style="font-size: 18px;">✓</div>
       <div>
-        <div style="font-weight: 600; margin-bottom: 2px;">Trae Usage: SessionID 已复制到剪贴板</div>
-        <div style="font-size: 12px; opacity: 0.9;">返回 Trae，通过VSCode端扩展Trae Usage自动识别更新</div>
+        <div style="font-weight: 600; margin-bottom: 2px;">SessionID copied to clipboard</div>
+        <div style="font-size: 12px; opacity: 0.9;">Return to Trae, the extension will auto-update SessionID</div>
       </div>
     </div>
   `;
   
   document.body.appendChild(toast);
   
-  // Remove toast after 4 seconds with slide out animation
+  // Remove toast after 3 seconds with fade out animation
   setTimeout(() => {
-    toast.style.animation = 'slideOut 0.3s ease-in';
+    toast.style.animation = 'fadeOut 0.3s ease-in';
     setTimeout(() => {
       if (toast.parentNode) {
         toast.parentNode.removeChild(toast);
@@ -92,7 +93,7 @@ function showSessionCopiedToast() {
         style.parentNode.removeChild(style);
       }
     }, 300);
-  }, 4000);
+  }, 3000);
 }
 
 // Optional: Add visual indicator on the page when token is extracted
