@@ -2,9 +2,10 @@
 let extractedSession = null;
 let isSessionFound = false;
 let extractionTimeout = null; // 用于防抖的定时器
+// 移除防重复复制逻辑，允许每次刷新都重新复制
 
 // Listen for web requests to the Trae API
-// Function to extract session from cookies
+// Function to extract session from cookies and auto-copy to clipboard
 async function extractSessionFromCookies() {
   try {
     console.log('Attempting to read X-Cloudide-Session cookie from trae.ai domain');
@@ -19,6 +20,15 @@ async function extractSessionFromCookies() {
       extractedSession = cookie.value;
       isSessionFound = true;
       console.log('X-Cloudide-Session found via cookies API:', extractedSession);
+      
+      // 自动复制到剪贴板
+      const sessionWithPrefix = `X-Cloudide-Session=${extractedSession}`;
+      await copyToClipboard(sessionWithPrefix);
+      
+      // 通知content script显示toast
+      notifyPageSessionCopied();
+      
+      console.log('Session auto-copied to clipboard:', extractedSession);
       
       // Store the session
       chrome.storage.local.set({
@@ -41,14 +51,45 @@ async function extractSessionFromCookies() {
   }
 }
 
-// Listen for GetUserToken API requests to trigger cookie extraction
+// Function to copy text to clipboard
+async function copyToClipboard(text) {
+  try {
+    // 在background script中，需要通过content script来复制到剪贴板
+    const tabs = await chrome.tabs.query({active: true, currentWindow: true});
+    if (tabs.length > 0) {
+      await chrome.tabs.sendMessage(tabs[0].id, {
+        action: 'copyToClipboard',
+        text: text
+      });
+      console.log('Text copied to clipboard successfully');
+    }
+  } catch (error) {
+    console.error('Failed to copy to clipboard:', error);
+  }
+}
+
+// Function to notify content script to show toast
+function notifyPageSessionCopied() {
+  // 获取当前活动的trae.ai标签页
+  chrome.tabs.query({active: true, url: '*://*.trae.ai/*'}, (tabs) => {
+    if (tabs.length > 0) {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        action: 'showSessionCopiedToast'
+      }).catch(error => {
+        console.log('Could not send message to content script:', error);
+      });
+    }
+  });
+}
+
+// Listen for ide_user_pay_status API requests to trigger cookie extraction
 chrome.webRequest.onBeforeSendHeaders.addListener(
   function(details) {
     console.log('Request URL:', details.url);
     
-    // Check if this is the GetUserToken API
-    if (details.url.includes('/GetUserToken')) {
-      console.log('GetUserToken API detected! Will extract session from the last request...');
+    // Check if this is the ide_user_pay_status API
+    if (details.url.includes('/ide_user_pay_status')) {
+      console.log('ide_user_pay_status API detected! Will extract session from the last request...');
       
       // 清除之前的定时器，确保只处理最后一个请求
       if (extractionTimeout) {
@@ -56,12 +97,12 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         console.log('Previous extraction cancelled, waiting for the last request...');
       }
       
-      // 设置新的定时器，延迟500ms执行，确保是最后一个请求
+      // 设置新的定时器，延迟1000ms执行，确保是最后一个请求
       extractionTimeout = setTimeout(() => {
-        console.log('Processing the last GetUserToken request, extracting session from cookies...');
+        console.log('Processing the last ide_user_pay_status request, extracting session from cookies...');
         extractSessionFromCookies();
         extractionTimeout = null;
-      }, 500);
+      }, 1000);
     }
   },
   {urls: ["*://api-sg-central.trae.ai/*"]},

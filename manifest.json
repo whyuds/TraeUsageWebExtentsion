@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Trae Usage Token Extractor",
-  "version": "1.2",
+  "version": "1.2.3",
   "description": "Automatically extract and manage X-Cloudide-Session from Trae.ai for seamless IDE integration with longer-lasting authentication.",
   "permissions": [
     "activeTab",
