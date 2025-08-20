@@ -1,6 +1,6 @@
 # Trae Usage Web Extension
 
-A Chrome extension to automatically extract X-Cloudide-Session from trae.ai for usage tracking.
+A browser extension to automatically extract X-Cloudide-Session from trae.ai for usage tracking.
 
 ## Features
 
@@ -16,14 +16,18 @@ A Chrome extension to automatically extract X-Cloudide-Session from trae.ai for 
 ### From Release (Recommended)
 1. Go to the [Releases](../../releases) page
 2. Download the latest `TraeUsageWebExtension.crx` file
-3. Open Chrome and go to `chrome://extensions/`
+3. Open your browser's extension management page:
+   - **Chrome**: `chrome://extensions/`
+   - **Edge**: `edge://extensions/`
 4. Enable "Developer mode" in the top right
 5. Drag and drop the `.crx` file onto the extensions page
 
 ### From Source
 1. Download the latest `TraeUsageWebExtension.zip`
 2. Extract the files to a folder
-3. Open Chrome and go to `chrome://extensions/`
+3. Open your browser's extension management page:
+   - **Chrome**: `chrome://extensions/`
+   - **Edge**: `edge://extensions/`
 4. Enable "Developer mode" in the top right
 5. Click "Load unpacked" and select the extracted folder
 6. The extension icon should appear in your toolbar
@@ -44,7 +48,7 @@ This project uses GitHub Actions to automatically build and release CRX files:
 
 1. **Create a new tag**: `git tag v1.0.0 && git push origin v1.0.0`
 2. **GitHub Actions will automatically**:
-   - Build the Chrome extension
+   - Build the browser extension
    - Generate a CRX file
    - Create a GitHub release
    - Upload both CRX and ZIP files
@@ -63,10 +67,10 @@ crx3 --keyPath=key.pem --crxPath=TraeUsageWebExtension.crx .
 
 ## Technical Details
 
-- Uses Chrome's webRequest API to monitor network requests
+- Uses browser's webRequest API to monitor network requests
 - Extracts session from cookies when `/GetUserToken` API is called
 - Implements debouncing to handle multiple rapid requests
-- Stores session data in Chrome's local storage
+- Stores session data in browser's local storage
 - Toast notifications with smooth animations
 - Smart button state management
 
