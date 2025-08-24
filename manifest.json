@@ -11,7 +11,6 @@
     "cookies"
   ],
   "host_permissions": [
-    "*://api-sg-central.trae.ai/*",
     "*://*.trae.ai/*"
   ],
   "background": {

@@ -10,16 +10,58 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     showSessionCopiedToast();
   } else if (request.action === 'copyToClipboard') {
     // Handle clipboard copy request from background script
-    navigator.clipboard.writeText(request.text).then(() => {
-      console.log('Text copied to clipboard successfully from content script');
-      sendResponse({success: true});
-    }).catch((error) => {
-      console.error('Failed to copy to clipboard from content script:', error);
-      sendResponse({success: false, error: error.message});
+    copyTextToClipboard(request.text).then((success) => {
+      if (success) {
+        console.log('Text copied to clipboard successfully from content script');
+        sendResponse({success: true});
+      } else {
+        console.error('Failed to copy to clipboard from content script');
+        sendResponse({success: false, error: 'Clipboard access failed'});
+      }
     });
     return true; // Keep the message channel open for async response
   }
 });
+
+// Robust clipboard copy function with fallback methods
+async function copyTextToClipboard(text) {
+  // Method 1: Try modern Clipboard API first
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (error) {
+      console.log('Modern clipboard API failed, trying fallback method:', error);
+    }
+  }
+  
+  // Method 2: Fallback to document.execCommand
+  try {
+    // Create a temporary textarea element
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    
+    // Select and copy the text
+    textArea.focus();
+    textArea.select();
+    const successful = document.execCommand('copy');
+    
+    // Clean up
+    document.body.removeChild(textArea);
+    
+    if (successful) {
+      return true;
+    }
+  } catch (error) {
+    console.log('Fallback clipboard method also failed:', error);
+  }
+  
+  return false;
+}
 
 // Show toast notification when session is copied
 function showSessionCopiedToast() {
@@ -130,7 +172,7 @@ function showPageNotification(message) {
 const originalFetch = window.fetch;
 window.fetch = function(...args) {
   const url = args[0];
-  if (typeof url === 'string' && url.includes('api-sg-central.trae.ai/trae/api/v1/pay/ide_user_pay_status')) {
+  if (typeof url === 'string' && url.includes('/trae/api/v1/pay/ide_user_pay_status')) {
     console.log('Detected Trae API call:', url);
   }
   return originalFetch.apply(this, args);
@@ -139,7 +181,7 @@ window.fetch = function(...args) {
 // Monitor XMLHttpRequest as well
 const originalXHROpen = XMLHttpRequest.prototype.open;
 XMLHttpRequest.prototype.open = function(method, url, ...args) {
-  if (typeof url === 'string' && url.includes('api-sg-central.trae.ai/trae/api/v1/pay/ide_user_pay_status')) {
+  if (typeof url === 'string' && url.includes('/trae/api/v1/pay/ide_user_pay_status')) {
     console.log('Detected Trae XHR call:', url);
   }
   return originalXHROpen.call(this, method, url, ...args);

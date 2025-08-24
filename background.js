@@ -105,7 +105,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
       }, 1000);
     }
   },
-  {urls: ["*://api-sg-central.trae.ai/*"]},
+  {urls: ["*://*.trae.ai/*"]},
   ["requestHeaders"]
 );
 
